@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,12 +19,11 @@ public class MainActivity extends AppCompatActivity {
 
     Button goButton;
     GridLayout gridLayout;
-    TextView timerTextview, question, answerStatus, resultDisplay;
+    TextView timerTextview, question, answerStatus, resultDisplay, finalResult, finalPercent;
     int locationCorrectAnswer, correctCount =0, totalCount=0;
-    ArrayList<Integer> answers = new ArrayList<Integer>();
+    ArrayList<Integer> answers = new ArrayList<>();
     Button button0, button1, button2, button3, playAgain;
     RelativeLayout gameplayRelativeLayout;
-    CountDownTimer countDownTimer;
 
     public void playAgain(View view){
 
@@ -46,13 +46,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
 
+                gameplayRelativeLayout.setVisibility(View.GONE);
+                LinearLayout linearLayout = (LinearLayout) findViewById(R.id.gameoverLinearLayout);
+                linearLayout.setVisibility(View.VISIBLE);
+                finalResult.setText(String.valueOf(correctCount)+ " / " + String.valueOf(totalCount));
 
-                timerTextview.setText("00 : 00");
-                gridLayout.setVisibility(View.INVISIBLE);
-                question.setVisibility(View.INVISIBLE);
-                answerStatus.setText("Your Score : "+String.valueOf(correctCount)+ " / " + String.valueOf(totalCount));
-                playAgain.setVisibility(View.VISIBLE);
-
+                double percent = ((double)correctCount/totalCount)*100;
+                int c= (int) percent;
+                finalPercent.setText(c + "%");
 
             }
         }.start();
@@ -68,6 +69,9 @@ public class MainActivity extends AppCompatActivity {
         goButton = (Button) findViewById(R.id.goButton);
         timerTextview = (TextView) findViewById(R.id.timerTextview);
         answerStatus = (TextView) findViewById(R.id.answerStatus);
+        finalResult = (TextView) findViewById(R.id.finalResult);
+        finalPercent = (TextView) findViewById(R.id.finalPercent);
+
 
         resultDisplay = (TextView) findViewById(R.id.resultDisplay);
         //goButton.setVisibility(View.VISIBLE);
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         button1 = (Button) findViewById(R.id.button1);
         button2 = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.button3);
-        playAgain = (Button) findViewById(R.id.playAgain);
+        playAgain = (Button) findViewById(R.id.playAgainButton);
 
         gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 
@@ -87,11 +91,53 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void generateQuesiton() {
-        Random rand = new Random();
-        int a = rand.nextInt(21);
-        int b = rand.nextInt(21);
 
-        question.setText(Integer.toString(a) + " + " + Integer.toString(b));
+        Random rand = new Random();
+        int a = rand.nextInt(51);
+        int b = rand.nextInt(51);
+        int c = rand.nextInt(11);
+        int d = rand.nextInt(11);
+
+        int correctAnswer = -1;
+        
+        int type = rand.nextInt(3);
+        Log.i("type", String.valueOf(type));
+
+        switch (type){
+
+            case 0: //addition
+            {
+                question.setText(Integer.toString(a) + " + " + Integer.toString(b));
+                correctAnswer = a+b;
+                Log.i("case","addition, " + correctAnswer);
+                break;
+            }
+
+            case 1: //subtraction
+            {
+                if(a>b){
+                    question.setText(Integer.toString(a) + " - " + Integer.toString(b));
+                    correctAnswer = a-b;
+                }else {
+                    question.setText(Integer.toString(b) + " - " + Integer.toString(a));
+                    correctAnswer = b-a;
+                }
+                
+                Log.i("case", "subtraction, "+ correctAnswer);
+                break;
+            }
+
+            case 2: //multiplication
+            {
+                question.setText(Integer.toString(c) + " * " + Integer.toString(d));
+                correctAnswer = c*d;
+                Log.i("case","multiplication, "+ correctAnswer);
+                break;
+            }
+
+        }
+
+       // question.setText(Integer.toString(a) + " + " + Integer.toString(b));
 
         locationCorrectAnswer = rand.nextInt(4);
         Log.e("chsak11", String.valueOf(locationCorrectAnswer));
@@ -102,16 +148,16 @@ public class MainActivity extends AppCompatActivity {
 
             if (i != locationCorrectAnswer) {
 
-                incorrectAnswer = rand.nextInt(41);
-                while (incorrectAnswer == a + b) {
+                incorrectAnswer = rand.nextInt(101);
+                while (incorrectAnswer == correctAnswer) {
 
-                    incorrectAnswer = rand.nextInt(41);
+                    incorrectAnswer = rand.nextInt(101);
 
                 }
 
                 answers.add(incorrectAnswer);
             } else {
-                answers.add(a + b);
+                answers.add(correctAnswer);
             }
         }
 

@@ -16,15 +16,18 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:background="@color/colorPrimary"
         android:onClick="startGame"
         android:text="Go!"
-        android:textSize="60sp" />
+        android:textColor="@color/white"
+        android:textSize="60sp"
+        android:visibility="visible" />
 
     <RelativeLayout
         android:id="@+id/gameplayRelativeLayout"
         android:layout_width="match_parent"
-        android:visibility="gone"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <GridLayout
             android:id="@+id/gridLayout"
@@ -48,7 +51,7 @@
                 android:onClick="chooseAnswer"
                 android:padding="20dp"
                 android:tag="0"
-                android:text="3"
+                android:text="P"
                 android:textSize="72sp" />
 
             <Button
@@ -64,7 +67,7 @@
                 android:onClick="chooseAnswer"
                 android:padding="20dp"
                 android:tag="1"
-                android:text="3"
+                android:text="Q"
                 android:textSize="72sp" />
 
 
@@ -81,7 +84,7 @@
                 android:onClick="chooseAnswer"
                 android:padding="20dp"
                 android:tag="2"
-                android:text="3"
+                android:text="R"
                 android:textSize="72sp" />
 
             <Button
@@ -97,7 +100,7 @@
                 android:onClick="chooseAnswer"
                 android:padding="20dp"
                 android:tag="3"
-                android:text="3"
+                android:text="S"
                 android:textSize="72sp" />
 
         </GridLayout>
@@ -108,9 +111,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@+id/timerTextview"
-            android:layout_marginEnd="41dp"
-            android:text="TextView"
-            android:textSize="24sp" />
+            android:text="X/X"
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/answerStatus"
@@ -118,20 +120,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/gridLayout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="30dp"
             android:text="Answer Status"
-            android:textSize="36sp" />
+            android:textSize="32sp" />
 
         <TextView
             android:id="@+id/timerTextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="21dp"
             android:layout_marginTop="10dp"
             android:layout_toStartOf="@+id/question"
             android:text="00 : 30"
-            android:textSize="24sp" />
+            android:textSize="21sp" />
 
         <TextView
             android:id="@+id/question"
@@ -140,20 +142,70 @@
             android:layout_below="@+id/resultDisplay"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
-            android:text="32+14"
+            android:text="X+Y"
             android:textSize="48sp"
             android:textStyle="normal|bold" />
 
-        <Button
-            android:id="@+id/playAgain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:onClick="playAgain"
-            android:visibility="gone"
-            android:text="Play Again" />
     </RelativeLayout>
+
+
+    <LinearLayout
+        android:id="@+id/gameoverLinearLayout"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your Score"
+            android:textSize="36sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="XX / XX"
+            android:id="@+id/finalResult"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:textSize="32sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="Correct Answer %"
+            android:textSize="28sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/finalPercent"
+            android:text="xx %"
+            android:textColor="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:textSize="24sp"
+            android:gravity="center"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="21sp"
+            android:id="@+id/playAgainButton"
+            android:paddingLeft="40dp"
+            android:text="Play Again"
+            android:onClick="playAgain"
+            android:paddingRight="40dp"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="40dp"/>
+
+    </LinearLayout>
 
 
 </RelativeLayout>
